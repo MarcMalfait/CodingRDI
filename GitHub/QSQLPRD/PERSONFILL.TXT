@@ -1,0 +1,39 @@
+000001200303/* RUNSQLSTM SRCFILE(MMAFIN1/QSQLPRD) SRCMBR(PERSONFILL) COMMIT(*NONE) */
+000002200303/* CLRPFM FILE(MMAFIN1/PERSONP)                                        */
+000100200303CREATE OR REPLACE TABLE MMAFIN1.PERSONP
+000103200303  (FIRSTNAME CHAR(25),
+000104200303   LASTNAME CHAR(30),
+000105200303   PRIMARY key(LASTNAME,FIRSTNAME)) ;
+000109200303insert into PERSONP (FIRSTNAME,LASTNAME) values ('Johan','Allaert');
+000110200303insert into PERSONP (FIRSTNAME,LASTNAME) values ('Dirk','Ameye');
+000111200303insert into PERSONP (FIRSTNAME,LASTNAME) values ('Els','Amez');
+000112200303insert into PERSONP (FIRSTNAME,LASTNAME) values ('Jan','Baert');
+000113200303insert into PERSONP (FIRSTNAME,LASTNAME) values ('Karel','Baert');
+000114200303insert into PERSONP (FIRSTNAME,LASTNAME) values ('Valerie','Callens');
+000115200303insert into PERSONP (FIRSTNAME,LASTNAME) values ('Vincent','Callens');
+000116200303insert into PERSONP (FIRSTNAME,LASTNAME) values ('Hans','Cappelaere');
+000117200303insert into PERSONP (FIRSTNAME,LASTNAME) values ('Isabelle','De Smet');
+000118200303insert into PERSONP (FIRSTNAME,LASTNAME) values ('Tom','De Smet');
+000119200303insert into PERSONP (FIRSTNAME,LASTNAME) values ('Sharon','De Smet');
+000120200303insert into PERSONP (FIRSTNAME,LASTNAME) values ('Katrien','Deboot');
+000121200303insert into PERSONP (FIRSTNAME,LASTNAME) values ('Jacques','Debrauwere');
+000122200303insert into PERSONP (FIRSTNAME,LASTNAME) values ('Cedric','Debrouwere');
+000123200303insert into PERSONP (FIRSTNAME,LASTNAME) values ('Marc','Declerck');
+000124200303insert into PERSONP (FIRSTNAME,LASTNAME) values ('Tine','Declercq');
+000125200303insert into PERSONP (FIRSTNAME,LASTNAME) values ('Evelien','Declercq');
+000126200303insert into PERSONP (FIRSTNAME,LASTNAME) values ('Bart','Decock');
+000127200303insert into PERSONP (FIRSTNAME,LASTNAME) values ('Jurgen','Deeren');
+000128200303insert into PERSONP (FIRSTNAME,LASTNAME) values ('Paul','Defoort');
+000129200303insert into PERSONP (FIRSTNAME,LASTNAME) values ('benedict','Degrendel');
+000130200303insert into PERSONP (FIRSTNAME,LASTNAME) values ('Mario','Degroote');
+000131200303insert into PERSONP (FIRSTNAME,LASTNAME) values ('Mireille','Degroote');
+000132200303insert into PERSONP (FIRSTNAME,LASTNAME) values ('Ann','Degroote');
+000133200303insert into PERSONP (FIRSTNAME,LASTNAME) values ('Magda','Dehaene');
+000134200303insert into PERSONP (FIRSTNAME,LASTNAME) values ('Kristof','Deleu');
+000135200303insert into PERSONP (FIRSTNAME,LASTNAME) values ('Ariane','Desmet');
+000136200303insert into PERSONP (FIRSTNAME,LASTNAME) values ('Rita','Desmet');
+000137200303insert into PERSONP (FIRSTNAME,LASTNAME) values ('Rik','Despriet');
+000138200303insert into PERSONP (FIRSTNAME,LASTNAME) values ('Els','Destoop');
+000139200303insert into PERSONP (FIRSTNAME,LASTNAME) values ('Marleen','Devos');
+000140200303insert into PERSONP (FIRSTNAME,LASTNAME) values ('Koen','Devriendt');
+000141200303insert into PERSONP (FIRSTNAME,LASTNAME) values ('Pol','Dewaele');

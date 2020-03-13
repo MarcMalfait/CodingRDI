@@ -1,0 +1,76 @@
+000100200306     A                                      DSPSIZ(24 80 *DS3)
+000101200306     A                                      PRINT
+000102200306     A                                      INDARA
+000103200306     A                                      ERRSFL
+000104200306     A                                      HELP
+000105200306     A                                      CA01
+000106200306     A                                      CA02
+000107200306     A                                      CA03
+000108200306     A                                      CA04
+000109200306     A                                      CA05
+000110200306     A                                      CA06
+000111200306     A                                      CA07
+000112200306     A                                      CA08
+000113200306     A                                      CA09
+000114200306     A                                      CA10
+000115200306     A                                      CA11
+000116200306     A                                      CA12
+000117200306     A                                      CA13
+000118200306     A                                      CA14
+000119200306     A                                      CA15
+000120200306     A                                      CA16
+000121200306     A                                      CA17
+000122200306     A                                      CA18
+000123200306     A                                      CA19
+000124200306     A                                      CA20
+000125200306     A                                      CA21
+000126200306     A                                      CA22
+000127200306     A                                      CA23
+000128200306     A                                      CA24
+000129200306     A                                      PAGEUP
+000130200306     A                                      PAGEDOWN
+000131200306     A          R SFL01                     SFL
+000132200306     A            $CUSCODE      10S 0O  8  6
+000133200306     A            $CUSNAME      30A  O  8 18
+000134200306     A            $CUSBDAY       8Y 0O  8 50EDTWRD('    /  /  ')
+000135200306     A            $CUSCON1      10Y 0O  8 62EDTWRD('0   -       ')
+000136200306     A          R SFLCTL                    SFLCTL(SFL01)
+000137200306     A                                      SFLSIZ(0010)
+000138200306     A                                      SFLPAG(0010)
+000139200306     A                                      OVERLAY
+000140200306     A  41                                  SFLDSP
+000141200306     A  42                                  SFLDSPCTL
+000142200306     A  40                                  SFLCLR
+000143200306     A  45                                  SFLEND(*MORE)
+000144200306     A                                  1  2USER
+000145200306     A                                  1 72DATE
+000146200306     A                                      EDTCDE(Y)
+000147200306     A                                  2 72TIME
+000148200306     A                                  1 32'TEST SUBFILE PROGRAM'
+000149200306     A                                  6  8'Customer'
+000150200306     A                                      COLOR(WHT)
+000151200306     A                                  7 12'Code'
+000152200306     A                                      COLOR(WHT)
+000153200306     A                                  6 18'Customer'
+000154200306     A                                      COLOR(WHT)
+000155200306     A                                  7 18'Name'
+000156200306     A                                      COLOR(WHT)
+000157200306     A                                  6 52'Customer'
+000158200306     A                                      COLOR(WHT)
+000159200306     A                                  7 52'Birthday'
+000160200306     A                                      COLOR(WHT)
+000161200306     A                                  6 65'Customer'
+000162200306     A                                      COLOR(WHT)
+000163200306     A                                  7 62'Contact Num'
+000164200306     A                                      COLOR(WHT)
+000165200306     A            ACUSCODE      10Y 0B  5  6EDTCDE(4)
+000166200306     A          R BOTTOM
+000167200306     A                                      OVERLAY
+000168200306     A                                 22  2'F3=Exit          F5=Refresh'
+000169200306     A                                      COLOR(BLU)
+000170200306     A                                 21  2'                                  -
+000171200306     A                                                                         -
+000172200306     A                                               '
+000173200306     A                                      DSPATR(UL)
+000174200306     A                                      COLOR(BLU)
+000175200306     A            AERRDSP       75   O 24  2COLOR(WHT)
