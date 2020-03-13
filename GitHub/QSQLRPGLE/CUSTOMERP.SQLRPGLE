@@ -117,137 +117,167 @@
 000216200306           endif;
 000217200306           exec sql fetch next from c1 into :dsp_fields;
 000218200306         enddo;
-000219200306
-000220200306         // Check whether the last record or not...
-000221200306         exec sql fetch next from c1 into :dsp_fields;
-000222200306         if sqlcode = 100 ;
-000223200306           rrn += 1;
-000224200306           sfl_End   = *on;
-000225200311           if (%Subst(sqlcode:1:2) = '02');
-000226200311              sfl_Clear = *on;
-000228200311              write SFLCTL;
-000229200311           endif;
-000230200306         else;
-000231200306           // If not the last record set the cursor to previous position.
-000232200306           exec sql fetch prior from c1 into :dsp_fields;
-000233200306         endif;
-000234200306
-000235200306       end-proc;
-000236200306
-000237200306       //------------------------------------------------------------
-000238200306       //------------------------------------------------------------
-000239200306       //   Display Subfile procedure...
-000240200306       //------------------------------------------------------------
-000241200306
-000242200306       dcl-proc dsply_sfl;
-000243200306
-000244200306         write bottom;
-000245200306         sfl_Dsply = *on;
-000246200306         sfl_DsCon = *on;
-000247200306         exfmt SFLCTL;
-000248200306         AERRDSP  = ' ';
-000249200306
-000250200306       end-proc;
-000251200306
-000252200306       //------------------------------------------------------------
-000253200306       //------------------------------------------------------------
-000254200306       //   Declare cursor procedure...
-000255200306       //------------------------------------------------------------
+000219200313
+000220200313         // Check whether the last record or not...
+000221200313         exec sql fetch next from c1 into :dsp_fields;
+000222200313         Select;
+000223200313         // no records found
+000224200313         When (%Subst(sqlstate:1:2) = '02');
+000225200313            sfl_Clear = *on;
+000226200313            write SFLCTL;
+000227200313         When (sqlcode = 100);
+000228200313            rrn += 1;
+000229200313            sfl_End = *on;
+000230200313         Other;
+000231200313           // If not the last record set the cursor to previous position.
+000232200313            exec sql fetch prior from c1 into :dsp_fields;
+000233200313         EndSL;
+000234200313
+000243200313         // if sqlcode = 100 ;
+000244200313         //   rrn += 1;
+000245200313         //   sfl_End   = *on;
+000246200313         //   if (%Subst(sqlstate:1:2) = '02');
+000247200313         //      sfl_Clear = *on;
+000248200313         //      write SFLCTL;
+000249200313         //   endif;
+000250200313         // else;
+000251200313         // If not the last record set the cursor to previous position.
+000252200313         //   exec sql fetch prior from c1 into :dsp_fields;
+000253200313         // endif;
+000254200306
+000255200306       end-proc;
 000256200306
-000257200306       dcl-proc build_csr;
-000258200306
-000259200306         exec sql close c1;
-000260200306         exec sql declare c1 scroll cursor for
-000261200306                  select CUSCODE, CUSNAME, CUSBDAY, CUSCON1
-000262200306                      from MMAFIN1.CSTMR_TBL
-000263200306                      where CUSCODE >= :ACUSCODE
-000264200306                      order by CUSCODE
-000265200306                      FOR READ ONLY;
-000266200306         exec sql open c1;
-000267200306
-000268200306       end-proc;
+000257200306       //------------------------------------------------------------
+000258200306       //------------------------------------------------------------
+000259200306       //   Display Subfile procedure...
+000260200306       //------------------------------------------------------------
+000261200306
+000262200306       dcl-proc dsply_sfl;
+000263200306
+000264200306         write bottom;
+000265200306         sfl_Dsply = *on;
+000266200306         sfl_DsCon = *on;
+000267200306         exfmt SFLCTL;
+000268200306         AERRDSP  = ' ';
 000269200306
-000270200306       //------------------------------------------------------------
-000271200306       //------------------------------------------------------------
-000272200306       //   Fetch first reocrd for 'page down' and 'enter' keys
+000270200306       end-proc;
+000271200306
+000272200306       //------------------------------------------------------------
 000273200306       //------------------------------------------------------------
-000274200306
-000275200306       dcl-proc fetch_Fst_pgDnEn;
+000274200313       //   Empty file procedure...
+000275200306       //------------------------------------------------------------
 000276200306
-000277200306         sfl_End = *off;
-000278200306         rrn = 0 ;
-000279200306         exec sql fetch next from c1 into :dsp_fields;
-000280200306
-000281200306       end-proc;
-000282200306
-000283200306       //------------------------------------------------------------
-000284200306       //------------------------------------------------------------
-000285200306       //------------------------------------------------------------
-000286200306       //   Fetch first reocrd for 'page up' Key
-000287200306       //------------------------------------------------------------
+000277200313       dcl-proc empty_csr;
+000278200306
+000279200313         exec sql close c2;
+000280200313         exec sql declare c2 scroll cursor for
+000281200313                  select *
+000282200306                      from MMAFIN1.CSTMR_TBL
+000283200306                      order by CUSCODE
+000284200306                      FOR READ ONLY;
+000285200313         exec sql open c2;
+000286200306
+000287200306       end-proc;
 000288200306
-000289200306       dcl-proc fetch_Fst_pgUp;
-000290200306         dcl-pi *n char(1) end-pi;
-000291200306
-000292200306         if rrn <> 0;
-000293200306           rrn += 9 ;
-000294200306         else;
-000295200306           rrn = 11;
-000296200306         endif;
-000297200306         // Make the 'rrn' negative, to point the cursor to 'rrn' number of
-000298200306         // rows before the last fetch
-000299200306         rrn *= -1;
-000300200306         // Set the cursor location...
-000301200306         exec sql fetch relative :rrn from c1 into :dsp_fields;
-000302200306
-000303200306         // If the cursor already in the top the list
-000304200306         if sqlcode = 100;
-000305200306           rrn = 0 ;
-000306200306           exec sql fetch first from c1 into :dsp_fields;
-000307200306
-000308200306           // Point the cursor to 9 Rows after the last fetch.
-000309200306           exec sql fetch relative +9  from c1 into :dsp_fields;
-000310200306
-000311200306           AERRDSP  = 'You have reached the top of the list.';
-000312200306           return '1';
-000313200306         endif;
+000289200313       //------------------------------------------------------------
+000290200313       //------------------------------------------------------------
+000291200313       //   Declare cursor procedure...
+000292200313       //------------------------------------------------------------
+000293200313
+000294200313       dcl-proc build_csr;
+000295200313
+000296200313         exec sql close c1;
+000297200313         exec sql declare c1 scroll cursor for
+000298200313                  select CUSCODE, CUSNAME, CUSBDAY, CUSCON1
+000299200313                      from MMAFIN1.CSTMR_TBL
+000300200313                      where CUSCODE >= :ACUSCODE
+000301200313                      order by CUSCODE
+000302200313                      FOR READ ONLY;
+000303200313         exec sql open c1;
+000304200313
+000305200313       end-proc;
+000306200313
+000307200306       //------------------------------------------------------------
+000308200306       //------------------------------------------------------------
+000309200306       //   Fetch first reocrd for 'page down' and 'enter' keys
+000310200306       //------------------------------------------------------------
+000311200306
+000312200306       dcl-proc fetch_Fst_pgDnEn;
+000313200306
 000314200306         sfl_End = *off;
 000315200306         rrn = 0 ;
-000316200306         return ' ';
+000316200306         exec sql fetch next from c1 into :dsp_fields;
 000317200306
 000318200306       end-proc;
 000319200306
 000320200306       //------------------------------------------------------------
 000321200306       //------------------------------------------------------------
-000322200306       //   Page down procedure...
-000323200306       //------------------------------------------------------------
-000324200306
-000325200306       dcl-proc process_pageDn;
-000326200306
-000327200306         if sfl_End = *on;
-000328200306           AERRDSP  = 'You have reached the bottom of the list.';
-000329200306           return;
-000330200306         endif;
-000331200306         clear_sfl();
-000332200306         fetch_Fst_pgDnEn();
-000333200306         build_sfl();
-000334200306
-000335200306       end-proc;
-000336200306
-000337200306       //------------------------------------------------------------
-000338200306       //------------------------------------------------------------
-000339200306       //   Page up procedure...
-000340200306       //------------------------------------------------------------
-000341200306
-000342200306       dcl-proc process_pageUp;
-000343200306
-000344200306         // Buid the subfile only if the first record successfully fetched
-000345200306         if fetch_Fst_pgUp() = ' ';
-000346200306           clear_sfl();
-000347200306           build_sfl();
-000348200306         endif;
-000349200306
-000350200306       end-proc;
-000351200306
-000352200306       //------------------------------------------------------------
-000353200306
+000322200306       //------------------------------------------------------------
+000323200306       //   Fetch first reocrd for 'page up' Key
+000324200306       //------------------------------------------------------------
+000325200306
+000326200306       dcl-proc fetch_Fst_pgUp;
+000327200306         dcl-pi *n char(1) end-pi;
+000328200306
+000329200306         if rrn <> 0;
+000330200306           rrn += 9 ;
+000331200306         else;
+000332200306           rrn = 11;
+000333200306         endif;
+000334200306         // Make the 'rrn' negative, to point the cursor to 'rrn' number of
+000335200306         // rows before the last fetch
+000336200306         rrn *= -1;
+000337200306         // Set the cursor location...
+000338200306         exec sql fetch relative :rrn from c1 into :dsp_fields;
+000339200306
+000340200306         // If the cursor already in the top the list
+000341200306         if sqlcode = 100;
+000342200306           rrn = 0 ;
+000343200306           exec sql fetch first from c1 into :dsp_fields;
+000344200306
+000345200306           // Point the cursor to 9 Rows after the last fetch.
+000346200306           exec sql fetch relative +9  from c1 into :dsp_fields;
+000347200306
+000348200306           AERRDSP  = 'You have reached the top of the list.';
+000349200306           return '1';
+000350200306         endif;
+000351200306         sfl_End = *off;
+000352200306         rrn = 0 ;
+000353200306         return ' ';
+000354200306
+000355200306       end-proc;
+000356200306
+000357200306       //------------------------------------------------------------
+000358200306       //------------------------------------------------------------
+000359200306       //   Page down procedure...
+000360200306       //------------------------------------------------------------
+000361200306
+000362200306       dcl-proc process_pageDn;
+000363200306
+000364200306         if sfl_End = *on;
+000365200306           AERRDSP  = 'You have reached the bottom of the list.';
+000366200306           return;
+000367200306         endif;
+000368200306         clear_sfl();
+000369200306         fetch_Fst_pgDnEn();
+000370200306         build_sfl();
+000371200306
+000372200306       end-proc;
+000373200306
+000374200306       //------------------------------------------------------------
+000375200306       //------------------------------------------------------------
+000376200306       //   Page up procedure...
+000377200306       //------------------------------------------------------------
+000378200306
+000379200306       dcl-proc process_pageUp;
+000380200306
+000381200306         // Buid the subfile only if the first record successfully fetched
+000382200306         if fetch_Fst_pgUp() = ' ';
+000383200306           clear_sfl();
+000384200306           build_sfl();
+000385200306         endif;
+000386200306
+000387200306       end-proc;
+000388200306
+000389200306       //------------------------------------------------------------
+000390200306
