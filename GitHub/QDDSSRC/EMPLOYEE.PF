@@ -1,0 +1,5 @@
+000100200302     A          R MCFMT
+000101200302     A            MCACCT         6S 0       COLHDG('Account Number')
+000102200302     A            MCFNAME       32A         COLHDG('First Name')
+000103200302     A            MCLNAME       32A         COLHDG('Last Name')
+000104200302     A          K MCACCT

@@ -1,0 +1,11 @@
+000100200306     A          R RCUSTOMER
+000101200306     A            CUSCODE       10  0       COLHDG('Customer Code')
+000102200306     A            CUSNAME       30          COLHDG('Customer Name')
+000103200306     A            CUSBDAY        8  0       COLHDG('Customer B''day')
+000104200306     A            CUSIDNM       12          COLHDG('Customer ID Number')
+000105200306     A            CUSCON1       10  0       COLHDG('Custmr contact Num1')
+000106200306     A            CUSCON2       10  0       COLHDG('Custmr contact Num2')
+000107200306     A            CUSADD1       30          COLHDG('Customer Address 1')
+000108200306     A            CUSADD2       30          COLHDG('Customer Address 2')
+000109200306     A            CUSADD3       30          COLHDG('Customer Address 3')
+000110200306     A          K CUSCODE

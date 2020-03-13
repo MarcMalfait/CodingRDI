@@ -1,0 +1,34 @@
+000001200303     A                                      DSPSIZ(24 80 *DS3)
+000002200303     A                                      PRINT
+000003200303     A                                      INDARA
+000004200303     A                                      ERRSFL
+000005200303     A                                      REF(PERSONP)
+000006200303     A                                      CA03(03 'F3=Exit')
+000007200303     A                                      CA05(05 'F5=Refresh')
+000008200303
+000009200303     A          R SFL01                     SFL
+000010200303     A            ZRRN           2S 0H
+000011200303     A            NAME          40A  O  5  3
+000012200303     A            LASTNAME  R        H
+000013200303     A            FIRSTNAME R        H
+000014200303     A            ARRAYELEM      8S 0H
+000015200303
+000016200303     A          R CTL01                     SFLCTL(SFL01)
+000017200303     A                                      SFLSIZ(0010)
+000018200303     A                                      SFLPAG(0010)
+000019200303     A                                      OVERLAY
+000020200303     A                                      PAGEDOWN(25)
+000021200303     A                                      PAGEUP(26)
+000022200303     A  30                                  SFLDSPCTL
+000023200303     A  31                                  SFLDSP
+000024200303     A  32                                  SFLEND(*MORE)
+000025200303     A  33                                  SFLCLR
+000026200303     A                                  1  8'R P G P G M . C O M'
+000027200303     A                                  2  2'Screen at a time subfile example'
+000029200303     A                                  3  2'Position to'
+000030200303     A            ZPOSITION R        B  3 14REFFLD(LASTNAME)
+000031200303     A                                  4  3'Person name'
+000032200303
+000033200303     A          R FOOT01
+000034200303     A                                 23  3'F3=Exit   F5=Refresh'
+000035200303

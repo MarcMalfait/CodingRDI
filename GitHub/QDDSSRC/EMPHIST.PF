@@ -1,0 +1,6 @@
+000100200302     A          R MHFMT
+000101200302     A            MHACCT         6S 0       COLHDG('Account Number')
+000102200302     A            MHDATE          L         COLHDG('Pay Date')
+000103200302     A            MHNET          9S 2       COLHDG('Pay Net Amount')
+000104200302     A          K MHACCT
+000105200302     A          K MHDATE
